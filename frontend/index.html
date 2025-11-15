@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reel Generator</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/konva@9/konva.min.js"></script>
 </head>
 <body>
 
@@ -14,10 +13,8 @@
 <div id="container"></div>
 
 <div class="controls">
-    <input id="textInput" placeholder="Inserisci testo..." />
-    <button onclick="addText()">Aggiungi Testo</button>
-    <button onclick="recordVideo()">Esporta Video</button>
-    <button onclick="window.location.href='templates.html'">Scegli Template</button>
+    <input id="textInput" placeholder="Scrivi qualcosa di figo..." />
+    <button onclick="generateReel()">Genera Reel</button>
 </div>
 
 <script src="app.js"></script>
