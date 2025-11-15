@@ -1,4 +1,4 @@
-// Stage canvas 360x640
+// Stage caqnvas 360x640
 const stage = new Konva.Stage({
     container: "container",
     width: 360,
