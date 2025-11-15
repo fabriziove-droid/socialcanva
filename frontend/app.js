@@ -1,14 +1,13 @@
-// Stage caqnvas 360x640
+// Canvas stage
 const stage = new Konva.Stage({
     container: "container",
     width: 360,
     height: 640
 });
-
 const layer = new Konva.Layer();
 stage.add(layer);
 
-// Aggiunta testo animato
+// Aggiungi testo animato
 function addText() {
     const val = document.getElementById("textInput").value;
     if (!val) return;
@@ -32,7 +31,7 @@ function addText() {
     layer.draw();
 }
 
-// Esportazione video lato browser
+// Esporta video lato browser
 function recordVideo() {
     const canvas = stage.toCanvas();
     const stream = canvas.captureStream(30); // 30 fps
