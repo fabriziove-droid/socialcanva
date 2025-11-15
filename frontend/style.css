@@ -1,16 +1,19 @@
 body {
     font-family: Arial, sans-serif;
-    background: #f2f2f2;
-    padding: 20px;
+    background: #222;
+    color: white;
     text-align: center;
+    padding: 20px;
 }
 
 #container {
-    margin: 0 auto;
+    margin: 20px auto;
     width: 360px;
     height: 640px;
-    border: 2px solid #ccc;
-    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
 }
 
 .controls {
@@ -19,11 +22,24 @@ body {
 
 input {
     padding: 10px;
-    width: 200px;
+    width: 220px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
 }
 
 button {
     padding: 10px 14px;
     margin-left: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff7e5f;
+    color: white;
     cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #feb47b;
 }
