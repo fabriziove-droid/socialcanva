@@ -1,16 +1,43 @@
-{
-  "bindings": [
-    {
-      "authLevel": "anonymous",
-      "type": "httpTrigger",
-      "direction": "in",
-      "name": "req",
-      "methods": ["post"]
-    },
-    {
-      "type": "http",
-      "direction": "out",
-      "name": "$return"
-    }
-  ]
-}
+import os
+import json
+import azure.functions as func
+import requests
+
+AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
+AZURE_OPENAI_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+AZURE_API_KEY = os.getenv("AZURE_API_KEY")
+
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    try:
+        req_body = req.get_json()
+        prompt = req_body.get("prompt", "A beautiful landscape")
+        
+        url = f"{AZURE_OPENAI_ENDPOINT}/openai/deployments/{AZURE_OPENAI_DEPLOYMENT}/images/generations?api-version=2024-02-01"
+
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {AZURE_API_KEY}"
+        }
+
+        payload = {
+            "model": "dall-e-3",
+            "prompt": prompt,
+            "size": "1024x1024",
+            "n": 1
+        }
+
+        response = requests.post(url, headers=headers, json=payload)
+        response.raise_for_status()
+        data = response.json()
+
+        # Estrai gli URL correttamente dal formato Azure
+        urls = [item["url"] for item in data.get("data", [])]
+
+        return func.HttpResponse(json.dumps({"urls": urls}), status_code=200, mimetype="application/json")
+
+    except Exception as e:
+        return func.HttpResponse(
+            json.dumps({"error": str(e)}),
+            status_code=500,
+            mimetype="application/json"
+        )
