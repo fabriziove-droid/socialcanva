@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Reel Generator</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Konva.js -->
+    <script src="https://cdn.jsdelivr.net/npm/konva@9/konva.min.js"></script>
+</head>
+<body>
+
+<h1>Story / Reel Generator</h1>
+
+<div id="container"></div>
+
+<div class="controls">
+    <input type="text" id="textInput" placeholder="Inserisci testo..." />
+    <button onclick="addText()">Aggiungi Testo</button>
+    <button onclick="startRecording()">Esporta Video</button>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
