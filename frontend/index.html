@@ -1,29 +1,25 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f2f2f2;
-    padding: 20px;
-    text-align: center;
-}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reel Generator</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/konva@9/konva.min.js"></script>
+</head>
+<body>
 
-#container {
-    margin: 0 auto;
-    width: 360px;
-    height: 640px;
-    border: 2px solid #ccc;
-    background: white;
-}
+<h1>Reel Generator</h1>
 
-.controls {
-    margin-top: 20px;
-}
+<div id="container"></div>
 
-input {
-    padding: 10px;
-    width: 200px;
-}
+<div class="controls">
+    <input id="textInput" placeholder="Inserisci testo..." />
+    <button onclick="addText()">Aggiungi Testo</button>
+    <button onclick="recordVideo()">Esporta Video</button>
+    <button onclick="window.location.href='templates.html'">Scegli Template</button>
+</div>
 
-button {
-    padding: 10px 14px;
-    margin-left: 5px;
-    cursor: pointer;
-}
+<script src="app.js"></script>
+</body>
+</html>
