@@ -3,19 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reel Generator PRO</title>
+<title>Social Reel Generator</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Reel Generator PRO</h1>
-
-<div id="container"></div>
-
-<div class="controls">
-    <input id="textInput" placeholder="Scrivi qui..." />
-    <button onclick="generateReel()">Genera Reel</button>
-</div>
-
-<script src="app.js"></script>
+  <h1>Social Reel Generator</h1>
+  <input id="prompt" placeholder="Es: donna che sorride e prepara una torta" />
+  <button id="generate">Genera Reel</button>
+  <div id="container">
+    <canvas id="canvas" width="360" height="640"></canvas>
+  </div>
+  <div id="download-link"></div>
+<script src="script.js"></script>
 </body>
 </html>
