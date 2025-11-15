@@ -5,24 +5,48 @@ document.getElementById('container').appendChild(canvas);
 const ctx = canvas.getContext('2d');
 
 function generateReel() {
-    const text = document.getElementById('textInput').value || "✨ Your Reel ✨";
+    const text = document.getElementById('textInput').value || "✨Your Reel✨";
 
-    // Variabili animazione
-    let start = Date.now();
+    // Durata video
     const duration = 5; // secondi
-    const fps = 60;
-    let circles = [];
-    for(let i=0; i<20; i++){
-        circles.push({
+    const fps = 30;
+    const totalFrames = duration * fps;
+    let currentFrame = 0;
+
+    // Scegli tema in base al testo
+    let theme = {
+        bg: "#ffcccc",
+        particles: "sprinkles",
+        colors: ["#ff9aa2","#ffb7b2","#ffdac1","#e2f0cb"]
+    };
+
+    if(/torta/i.test(text)) {
+        theme.bg = "#fff0f5";
+        theme.particles = "sprinkles";
+        theme.colors = ["#f8c8dc","#ffd1dc","#ffe4e1","#fff0f5"];
+    } else if(/festa/i.test(text)) {
+        theme.bg = "#e0f7fa";
+        theme.particles = "balloons";
+        theme.colors = ["#ff8a80","#ffea00","#80d8ff","#ffd180"];
+    } else if(/viaggio/i.test(text)) {
+        theme.bg = "#cce0ff";
+        theme.particles = "clouds";
+        theme.colors = ["#cce0ff","#99ccff","#66b2ff","#3399ff"];
+    }
+
+    // Genera particelle iniziali
+    const particles = [];
+    for(let i=0;i<30;i++){
+        particles.push({
             x: Math.random()*360,
             y: Math.random()*640,
-            r: Math.random()*30 + 10,
+            r: Math.random()*10 + 5,
             speed: Math.random()*2 + 0.5,
-            color: `hsl(${Math.random()*360},70%,60%)`
+            color: theme.colors[Math.floor(Math.random()*theme.colors.length)]
         });
     }
 
-    // Stream per registrare
+    // Stream per registrazione
     const stream = canvas.captureStream(fps);
     const chunks = [];
     const recorder = new MediaRecorder(stream);
@@ -37,39 +61,34 @@ function generateReel() {
     };
     recorder.start();
 
-    // Animazione frame by frame
-    function animate() {
-        const elapsed = (Date.now() - start)/1000;
-        if(elapsed>duration){
-            recorder.stop();
-            return;
-        }
-
-        // Sfondo animato
-        const gradient = ctx.createLinearGradient(0,0,360,640);
-        gradient.addColorStop(0, `hsl(${(elapsed*60)%360},70%,60%)`);
-        gradient.addColorStop(1, `hsl(${(elapsed*60+60)%360},70%,70%)`);
-        ctx.fillStyle = gradient;
+    function drawFrame() {
+        // Sfondo
+        ctx.fillStyle = theme.bg;
         ctx.fillRect(0,0,360,640);
 
-        // Cerchi animati
-        circles.forEach(c=>{
-            c.y -= c.speed;
-            if(c.y + c.r < 0) c.y = 640 + c.r;
+        // Particelle animate
+        particles.forEach(p=>{
+            p.y -= p.speed;
+            if(p.y + p.r < 0) p.y = 640 + p.r;
             ctx.beginPath();
-            ctx.arc(c.x,c.y,c.r,0,Math.PI*2);
-            ctx.fillStyle = c.color;
+            ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+            ctx.fillStyle = p.color;
             ctx.fill();
         });
 
-        // Testo centrale animato
-        ctx.fillStyle = 'white';
-        ctx.font = 'bold 32px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(text, 180, 320 + Math.sin(elapsed*3)*10);
+        // Testo centrale oscillante
+        ctx.fillStyle = "#333";
+        ctx.font = "bold 32px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(text, 180, 320 + Math.sin(currentFrame*0.2)*20);
 
-        requestAnimationFrame(animate);
+        currentFrame++;
+        if(currentFrame<=totalFrames){
+            requestAnimationFrame(drawFrame);
+        } else {
+            recorder.stop();
+        }
     }
 
-    animate();
+    drawFrame();
 }
