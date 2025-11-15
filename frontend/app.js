@@ -1,67 +1,58 @@
-// === CREAZIONE CANVAS KONVA ===
+// Stage canvas 360x640
 const stage = new Konva.Stage({
-    container: 'container',
+    container: "container",
     width: 360,
-    height: 640,
+    height: 640
 });
 
 const layer = new Konva.Layer();
 stage.add(layer);
 
-// === AGGIUNTA TESTO ===
+// Aggiunta testo animato
 function addText() {
-    const val = document.getElementById('textInput').value;
+    const val = document.getElementById("textInput").value;
     if (!val) return;
 
     const txt = new Konva.Text({
         x: 180,
-        y: 700, // fuori dallo schermo per animazione
+        y: 700,
         text: val,
-        fontSize: 28,
-        fill: 'black',
-        align: 'center',
+        fontSize: 30,
+        fill: "black"
     });
+
     txt.offsetX(txt.width() / 2);
     layer.add(txt);
 
-    // Animazione di ingresso
     txt.to({
         y: 300,
-        duration: 1.5,
-        easing: Konva.Easings.EaseInOut,
+        duration: 1.5
     });
 
     layer.draw();
 }
 
-// === ESPORTAZIONE VIDEO ===
-let recorder;
-let recordedChunks = [];
-
-function startRecording() {
+// Esportazione video lato browser
+function recordVideo() {
     const canvas = stage.toCanvas();
-    const stream = canvas.captureStream(30);
+    const stream = canvas.captureStream(30); // 30 fps
 
-    recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+    let chunks = [];
+    const recorder = new MediaRecorder(stream);
 
-    recorder.ondataavailable = e => recordedChunks.push(e.data);
+    recorder.ondataavailable = e => chunks.push(e.data);
 
-    recorder.onstop = saveVideo;
+    recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: "video/webm" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "reel.webm";
+        a.click();
+    };
 
     recorder.start();
-
-    alert("Registrazione avviata per 5 secondi...");
+    alert("Registrazione avviata (5s)");
     setTimeout(() => recorder.stop(), 5000);
-}
-
-function saveVideo() {
-    const blob = new Blob(recordedChunks, { type: "video/webm" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = "reel.webm";
-    a.click();
-
-    recordedChunks = [];
 }
