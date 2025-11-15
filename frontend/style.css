@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+#container {
+    margin: 0 auto;
+    width: 360px;
+    height: 640px;
+    border: 2px solid #ccc;
+    background: white;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+input {
+    padding: 10px;
+    width: 200px;
+}
+
+button {
+    padding: 10px 15px;
+    margin-left: 5px;
+    cursor: pointer;
+}
