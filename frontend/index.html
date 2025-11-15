@@ -1,19 +1,25 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Social Reel Generator</title>
-<link rel="stylesheet" href="style.css">
+<style>
+body { font-family: Arial; background: #f2f2f2; text-align:center; padding:20px; }
+#container { margin:0 auto; width:360px; height:640px; border:2px solid #ccc; background:white; position:relative; }
+canvas { width:100%; height:100%; }
+.controls { margin-top:20px; }
+input, button { padding:10px; }
+</style>
 </head>
 <body>
-  <h1>Social Reel Generator</h1>
-  <input id="prompt" placeholder="Es: donna che sorride e prepara una torta" />
-  <button id="generate">Genera Reel</button>
-  <div id="container">
+<h2>Generatore Reel</h2>
+<div id="container">
     <canvas id="canvas" width="360" height="640"></canvas>
-  </div>
-  <div id="download-link"></div>
+</div>
+<div class="controls">
+    <input type="text" id="prompt" placeholder="Scrivi il prompt...">
+    <button id="generateBtn">Genera</button>
+</div>
 <script src="script.js"></script>
 </body>
 </html>
